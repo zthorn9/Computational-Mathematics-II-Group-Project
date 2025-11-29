@@ -15,7 +15,6 @@ def cluster_sizes(L, p, nsamp):
             sizes.extend(cluster_sizes)
     return np.array(sizes)
 
-
 L = 1000        
 nsamp = 1000
 # p values to investigate average cluster size against occupation probability p
@@ -55,9 +54,6 @@ sizes_n = cluster_sizes(L, p_test, nsamp)
 if sizes_n.size > 0:
     s_max = sizes_n.max()
     n, sbins = np.histogram(sizes_n, bins = int(s_max) + 1, range = (0, s_max + 1))
-#     s_values = np.arange(sizes_n.max() + 1)
-#     n_s_p_measured = n/(L*nsamp)
-#     n_s_p_theoretical = (p_test**s_values) * (1 - p_test)**2
     s_values = 0.5*(sbins[1:] + sbins[:-1])
     n_s_p_measured = n/(L*nsamp)
     s_xi = -1.0/np.log(p_test)
@@ -68,80 +64,21 @@ else:
     n_s_p_theoretical = np.array([0])
 
 print(f"Characteristic cluster size = {s_xi:.2f}")    
-# # Plot 1: S vs p
-# plt.figure(figsize=(15,6))
-# plt.subplot(1, 4, 1)
-# plt.plot(p_vals, S_measured, 'bo', label='Measured S')
-# plt.plot(p_vals, S_theoretical, 'r-', label='Theoretical S = (1+p)/(1-p)')
-# plt.xlabel('Occupation Probability (p)', fontsize = 12)
-# plt.ylabel('Average Cluster Size (S)',fontsize = 12)
-# plt.legend(fontsize = 10)
-# plt.grid(True)
-# # plt.title('Average Cluster Size S vs Occupation Probability p',fontsize = 12)
-# 
-# # Plot 2: Log-Log plot to find exponent gamma
-# plt.subplot(1, 4, 2)
-# plt.loglog(1 - p_vals, S_measured, 'bo', label='Measured S')
-# plt.loglog(1 - p_vals, S_theoretical, 'r-', label='Theoretical S')
-# plt.xlabel('Log(1 - p)',fontsize = 12)
-# plt.ylabel('Log(S)',fontsize = 12)
-# plt.legend(fontsize = 10)
-# plt.grid(True)
-# # plt.title('Log-log plot of Average Cluster Size S against (1-p)',fontsize = 12)
-# 
-# # Plot 3: n(s,p) vs s (semi log plot)
-# plt.subplot(1, 4, 3)
-# plt.semilogy(s_values[1:],n_s_p_measured[1:],'bo', label = 'Numerical Result n(s,p)')
-# plt.semilogy(s_values[1:], n_s_p_theoretical[1:], 'r-', label=f'Theory: $\\propto e^{{-s/s_\\xi}}$ (where $s_\\xi={s_xi:.2f}$)')
-# plt.xlabel('Cluster size s',fontsize = 12)
-# plt.ylabel('Cluster Number density n(s,p)',fontsize = 12)
-# # plt.title(f'Cluster Number density n(s,p) at p={p_test}',fontsize = 12)
-# plt.legend(fontsize = 10)
-# plt.grid(True)
-# plt.xlim(0, 50) 
-# plt.ylim(bottom=1e-10)
-# 
-# # Plot 4: log plot of (1-p) vs S_xi
-# plt.subplot(1, 4, 4)
-# plt.loglog(1 - p_vals, s_xi_measured, 'bo', label='Numerical $s_\\xi$')
-# plt.loglog(1 - p_vals, 1/(1 - p_vals), 'r-', label='Theoretical $s_\\xi \\propto (1-p)^{-1}$')
-# plt.xlabel('Log(1 - p)',fontsize = 12)
-# plt.ylabel('Log($s_\\xi$)',fontsize = 12)
-# # plt.title('Log-Log Plot (Slope shows exponent $\\sigma$)',fontsize = 12)
-# plt.legend(fontsize = 10)
-# plt.grid(True)
-# 
-# 
-# plt.subplots_adjust(wspace=0.35)
-# plt.tight_layout()
-# plt.show()
 
-# Plot 1: S vs p
-# plt.subplot(1, 2, 1)
-# plt.plot(p_vals, S_measured, 'bo', label='Measured S')
-# plt.plot(p_vals, S_theoretical, 'r-', label='Theoretical S = (1+p)/(1-p)')
-# plt.xlabel('Occupation Probability (p)', fontsize = 15)
-# plt.ylabel('Average Cluster Size (S)',fontsize = 15)
-# plt.legend(fontsize = 15)
-# plt.grid(True)
-# plt.title('Average Cluster Size S vs Occupation Probability p',fontsize = 15)
-# 
-# 
-# 
-# # Plot 3: n(s,p) vs s (semi log plot)
-# plt.subplot(1, 2, 2)
-# plt.semilogy(s_values[1:],n_s_p_measured[1:],'bo', label = 'Numerical Result n(s,p)')
-# plt.semilogy(s_values[1:], n_s_p_theoretical[1:], 'r-', label=f'Theory: $\\propto e^{{-s/s_\\xi}}$ (where $s_\\xi={s_xi:.2f}$)')
-# plt.xlabel('Cluster size s',fontsize = 12)
-# plt.ylabel('Cluster Number density n(s,p)',fontsize = 15)
-# plt.title(f'Cluster Number density n(s,p) at p={p_test}',fontsize = 15)
-# plt.legend(fontsize = 15)
-# plt.grid(True)
-# plt.xlim(0, 50) 
-# plt.ylim(bottom=1e-10)
+# Figure 1: log(n(s,p) against s
+plt.semilogy(s_values[1:],n_s_p_measured[1:],'bo', label = 'Numerical Result n(s,p)')
+plt.semilogy(s_values[1:], n_s_p_theoretical[1:], 'r-', label=f'Theory: $\\propto e^{{-s/s_\\xi}}$ (where $s_\\xi={s_xi:.2f}$)')
+plt.xlabel('Cluster size s',fontsize = 15)
+plt.ylabel('log(n(s,p))',fontsize = 15)
+plt.title(f'Cluster Number density n(s,p) at p={p_test}',fontsize = 15)
+plt.legend(fontsize = 15)
+plt.grid(True)
+plt.xlim(0, 50) 
+plt.ylim(bottom=1e-10)
+plt.show()
 
-# Plot 2: Log-Log plot to find exponent gamma
-# plt.figure(figsize =())
+# Figure 2
+# Plot 1: Log-Log plot to find exponent gamma
 plt.subplot(1, 2, 1)
 plt.loglog(1 - p_vals, S_measured, 'bo', label='Measured S')
 plt.loglog(1 - p_vals, S_theoretical, 'r-', label='Theoretical S')
@@ -151,7 +88,7 @@ plt.legend(fontsize = 15)
 plt.grid(True)
 plt.title('Log-Log plot of Average Cluster Size S against (1-p)',fontsize = 13)
 
-# Plot 4: log plot of (1-p) vs S_xi
+# Plot 2: log plot of (1-p) vs S_xi
 plt.subplot(1, 2, 2)
 plt.loglog(1 - p_vals, s_xi_measured, 'bo', label='Numerical $s_\\xi$')
 plt.loglog(1 - p_vals, 1/(1 - p_vals), 'r-', label='Theoretical $s_\\xi \\propto (1-p)^{-1}$')
@@ -161,6 +98,4 @@ plt.title('Log-Log Plot of Characteristic Cluster $s_\\xi$ against (1-p)',fontsi
 plt.legend(fontsize = 15)
 plt.grid(True)
 
-# plt.tight_layout()
 plt.show()
-
