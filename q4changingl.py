@@ -8,7 +8,7 @@ plist = [0.5, 0.52, 0.54, 0.56, 0.58]
 allarea = np.array([])
 
 for r in range(1, len(Llist)+1):
-    plt.figure(figsize=(8,8))
+    plt.figure()
     L = Llist[r-1]
     for d in range(1, len(plist)+1):
         allarea = np.array([])
@@ -32,8 +32,10 @@ for r in range(1, len(Llist)+1):
   
         plt.loglog(sl,nsl,'.', label=f'p = {p}')
 
-    plt.xlabel('$s$')
-    plt.ylabel('$n(s,p;L)$')
-    plt.title(f'$L = {L}$, $a = 1.2$')   
+    plt.xlabel('$s$', fontsize=18)
+    plt.ylabel('$n(s,p;L)$', fontsize=18)
+    plt.title(f'$L = {L}$, $a = 1.2$', fontsize=18)   
+    plt.tick_params(axis='both', which='major', labelsize=18)
+    plt.tight_layout()
     plt.legend()   
 plt.show()
