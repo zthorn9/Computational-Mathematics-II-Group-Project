@@ -1,0 +1,25 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+#data#
+pc=0.59275
+p=np.array([0.600,0.605,0.610,0.615,0.620,0.625,0.630,0.635,0.640])
+Pinf = np.array([0.4112527412,0.4150240385,0.4345703125,0.4511850718,0.4591079905,0.4709532203,0.4956456801,0.5111328125, 0.5236092033])
+
+x=np.log(p-pc)
+y=np.log(Pinf)
+
+#best fit#
+beta, c=np.polyfit(x,y, deg=1)
+
+#plot#
+plt.figure()
+plt.plot(x,y,'o', label="data")
+xfit=np.linspace(x.min(),x.max(),200)
+plt.plot(xfit,beta*xfit +c,label=f"fit: beta={beta:.3f}")
+plt.xlabel("log(p-p_c)")
+plt.ylabel("log(P_inf(p))")
+plt.title("log-log fit for beta")
+plt.grid(True)
+plt.legend()
+plt.show()
